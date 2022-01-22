@@ -7,7 +7,7 @@ sh, sw = s.getmaxyx()
 w=curses.newwin(sh,sw,0,0)
 w.keypad(1)
 w.timeout(100)
-
+score=0
 snk_x= sw//4
 snk_y=sh//2
 
@@ -24,6 +24,7 @@ while True:
     next_key=w.getch()
     key=key if next_key == -1 else next_key
     if snake[0][0] in [0,sh] or snake[0][1] in [0,sw] or snake[0] in snake[1: ]:
+        print(score)
         curses.endwin()
         quit()
     new_head=[snake[0][0],snake[0][1]]
@@ -38,7 +39,9 @@ while True:
         new_head[1] +=1
     snake.insert(0,new_head)
     if snake[0] == food:
+        score+=1
         food = None
+        
         while food is None:
             nf=[
                 random.randint(1,sh-1),
